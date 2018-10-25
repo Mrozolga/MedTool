@@ -3,6 +3,8 @@ import Vue from 'vue'
 import secure from '../view/secure'
 import login from '../view/login'
 import signup from '../view/signup'
+import welcomewindow from '../view/welcomewidnow'
+import patient from '../view/patient'
 
 Vue.use(Router)
 
@@ -28,6 +30,17 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: signup
+    },
+    {
+      path: '/welcomewindow',
+      name: 'welcomewindow',
+      component: welcomewindow
+    },
+    {
+      path: '/patient/:pid',
+      name: 'patient',
+      props: true,
+      component: patient
     }
   ]
 })

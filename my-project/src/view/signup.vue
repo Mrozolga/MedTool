@@ -100,8 +100,8 @@
                 user_id: cred.user.uid
               })
             }).then(() =>
-              this.feedback = 'Taki login nie istnieje',
-              this.$router.push({name: 'secure'})
+              this.feedback = 'Taki jest wolny',
+              this.$router.push({name: 'login'})
             )
           }
         })
