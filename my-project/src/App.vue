@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="this.$route.name==='secure'"><Navbar :login="login"></Navbar></div>
+    <div v-if="this.$route.name!=='login' && this.$route.name!=='signup'"><Navbar :login="login"></Navbar></div>
     <div v-else><NavbarStart :logPanel="logPanel" :signPanel="signPanel" @sign="signPanelmethod"
                              @log="logPanelmethod"></NavbarStart></div>
     <router-view/>

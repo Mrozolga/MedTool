@@ -54,7 +54,7 @@
         if (this.username != '' && this.password != '') {
           firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(cred =>
             console.log(cred.user))
-          this.$router.push({name: 'secure'})
+          this.$router.push({name: 'welcomewindow'})
         }
       }
     }
