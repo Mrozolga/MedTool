@@ -28,15 +28,11 @@
       }
     },
     mounted () {
-      if (firebase.auth().currentUser.email===null) {
+      if (firebase.auth().currentUser.email === null) {
         this.$router.replace({name: 'login'})
       }
     },
     methods: {
-      logout () {
-          firebase.auth().signOut().then(() =>
-            this.$router.replace({name: 'login'}))
-      },
       signPanelmethod () {
         this.signPanel = true
         this.logPanel = false
@@ -46,13 +42,6 @@
         this.logPanel = true
         this.signPanel = false
         this.$router.replace({name: 'login'})
-      }
-    },
-    computed: {
-      myProps () {
-        return {
-          login: this.login
-        }
       }
     }
   }
