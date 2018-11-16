@@ -5,6 +5,9 @@ import login from '../view/login'
 import signup from '../view/signup'
 import welcomewindow from '../view/welcomewidnow'
 import patient from '../view/patient'
+import addpatient from '../view/addpatient'
+import adddrug from '../view/adddrug'
+import calendar from '../view/calendar'
 
 Vue.use(Router)
 
@@ -41,6 +44,21 @@ export default new Router({
       name: 'patient',
       props: true,
       component: patient
+    },
+        {
+      path: '/addpatient',
+      name: 'addpatient',
+      component: addpatient
+    },
+    {
+      path: '/adddrug',
+      name: 'adddrug',
+      component: adddrug
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: calendar
     }
   ]
 })

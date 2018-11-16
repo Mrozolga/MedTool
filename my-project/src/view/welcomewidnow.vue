@@ -26,6 +26,9 @@
               <v-list-tile-title v-html="item"></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+          <v-list-tile>
+            <v-btn color="teal darken-3" dark v-on:click="addpatient">Dodaj</v-btn>
+          </v-list-tile>
         </v-list>
       </v-card>
     </v-dialog>
@@ -39,6 +42,11 @@
       return {
         dialog: true,
         items: ['Pacjent1', 'Pacjent2']
+      }
+    },
+    methods: {
+      addpatient () {
+          this.$router.push({name: 'addpatient'})
       }
     }
   }
