@@ -87,20 +87,20 @@
           )
         }
         console.log(this.slug)
-        let ref = db.collection('users').doc(this.slug)
-        ref.get().then(doc => {
-          console.log(doc)
-          if (doc.exists) {
-            this.feedback = 'Taki login już istnieje. Wybierz inny.'
-          }
-          else {
+        let checkAlias = firebase.functions().httpsCallable('checkAlias')
+        checkAlias({slug: this.slug}).then(result => {
+          console.log(result)
+          if (!result.data.unique) {
+            console.log('this alias already exists')
+          } else {
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(cred => {
-              ref.set({
+              db.collection('users').doc(this.slug).set({
                 login: this.login,
-                user_id: cred.user.uid
+                user_id: cred.user.uid,
+                patients: []
               })
             }).then(() =>
-              this.feedback = 'Taki jest wolny',
+                this.feedback = 'Taki jest wolny',
               this.$router.push({name: 'login'})
             )
           }

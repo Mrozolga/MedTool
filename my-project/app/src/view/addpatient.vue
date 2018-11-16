@@ -21,12 +21,6 @@
         required
       ></v-text-field>
       <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
-      <v-text-field
         v-model="login"
         :rules="loginRules"
         label="Login"
@@ -41,11 +35,15 @@
       ></v-text-field>
     </v-form>
     <v-btn color="grey lighten-2">Anuluj</v-btn>
-    <v-btn color="teal darken-2">Zapisz</v-btn>
+    <v-btn color="teal darken-2" @click="addToDb()">Zapisz</v-btn>
   </v-container>
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import db from '../firebase/init'
+  import slugify from 'slugify'
+
   export default {
     name: 'addpatient',
     data: () => ({
@@ -67,12 +65,28 @@
       dateRules: [
         v => !!v || 'Data urodzenia jest wymagana',
       ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail jest wymagany',
-        v => /.+@.+/.test(v) || 'E-mail musi być prawidłowy'
-      ]
-    })
+      slug: '',
+      user: null
+    }),
+    methods: {
+      addToDb () {
+        this.slug = slugify(this.login, {
+          replacement: '-',
+          remove: /[$*@%_+~().!:]/g,
+          lower: true
+        })
+        db.collection('patients').doc(this.slug).set({
+          name: this.name,
+          surname: this.surname,
+          date: this.date,
+          carer: firebase.auth().currentUser.email,
+          login: this.slug
+        }),
+          db.collection('users').doc('olga').update({
+            patients: this.slug
+          })
+      }
+    }
   }
 </script>
 

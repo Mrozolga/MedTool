@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <div v-if="this.$route.name!=='login' && this.$route.name!=='signup'"><Navbar :login="login"></Navbar></div>
-    <div v-else><NavbarStart :logPanel="logPanel" :signPanel="signPanel" @sign="signPanelmethod"
-                             @log="logPanelmethod"></NavbarStart></div>
+    <div v-if="this.$route.name!=='login' && this.$route.name!=='signup'">
+      <Navbar></Navbar>
+    </div>
+    <div v-else>
+      <NavbarStart :logPanel="logPanel" :signPanel="signPanel" @sign="signPanelmethod"
+                   @log="logPanelmethod"></NavbarStart>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -24,7 +28,6 @@
         },
         logPanel: true,
         signPanel: false,
-        login: firebase.auth().currentUser.email
       }
     },
     mounted () {
