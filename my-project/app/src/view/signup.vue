@@ -96,7 +96,7 @@
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(cred => {
               db.collection('users').doc(this.slug).set({
                 login: this.login,
-                user_id: cred.user.uid,
+                mail: this.email,
                 patients: []
               })
             }).then(() =>

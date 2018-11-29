@@ -13,7 +13,7 @@
         </v-card-title>
         <v-list subheader>
           <v-list-tile
-            v-for="item in items"
+            v-for="item in items[0]"
             :key="item"
             avatar
             @click="$router.push({ name: 'patient', params: { pid: item }})"
@@ -36,18 +36,41 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import db from '../firebase/init'
+
   export default {
     name: 'welcomewidnow',
     data () {
       return {
         dialog: true,
-        items: ['Pacjent1', 'Pacjent2']
+        items: []
       }
     },
     methods: {
       addpatient () {
-          this.$router.push({name: 'addpatient'})
+        this.$router.push({name: 'addpatient'})
+      },
+      returnUser () {
+        var array = []
+        var usersCollectionRef = db.collection('users')
+        usersCollectionRef.where('mail', '==', firebase.auth().currentUser.email).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, ' => ', doc.data())
+              array.push(doc.data().patients)
+            })
+          },
+          console.log('Koncze then')
+        ).catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
+        this.items = array
       }
+    },
+    mounted () {
+      console.log('Updateuje')
+      this.returnUser()
     }
   }
 </script>

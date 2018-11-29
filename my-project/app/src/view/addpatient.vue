@@ -48,7 +48,9 @@
     name: 'addpatient',
     data: () => ({
       valid: false,
+      key: '',
       name: '',
+      user: null,
       nameRules: [
         v => !!v || 'Imię jest wymagane',
       ],
@@ -66,25 +68,40 @@
         v => !!v || 'Data urodzenia jest wymagana',
       ],
       slug: '',
-      user: null
+      UserKey: ''
     }),
     methods: {
       addToDb () {
-        this.slug = slugify(this.login, {
-          replacement: '-',
-          remove: /[$*@%_+~().!:]/g,
-          lower: true
-        })
+          this.slug = slugify(this.login, {
+            replacement: '-',
+            remove: /[$*@%_+~().!:]/g,
+            lower: true
+          })
+        this.returnUser(this.slug)
         db.collection('patients').doc(this.slug).set({
           name: this.name,
           surname: this.surname,
           date: this.date,
           carer: firebase.auth().currentUser.email,
-          login: this.slug
-        }),
-          db.collection('users').doc('olga').update({
-            patients: this.slug
-          })
+          login: this.slug,
+          rules: []
+        })
+      },
+      returnUser (slug) {
+        var usersCollectionRef = db.collection('users')
+        usersCollectionRef.where('mail', '==', firebase.auth().currentUser.email).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, ' => ', doc.data())
+              usersCollectionRef.doc(doc.id).update({
+                patients: firebase.firestore.FieldValue.arrayUnion(slug)
+              })
+            })
+          },
+          console.log('Koncze then')
+        ).catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
       }
     }
   }
