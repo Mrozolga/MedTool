@@ -6,9 +6,11 @@ import router from './router'
 import firebase from 'firebase'
 import VueScheduler from 'v-calendar-scheduler';
 import 'v-calendar-scheduler/lib/main.css';
+//import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.use(Vuetify)
 let app = null
+//Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueScheduler, {
   locale: 'pl',

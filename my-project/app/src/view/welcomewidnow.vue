@@ -71,10 +71,13 @@
     mounted () {
       console.log('Updateuje')
       this.returnUser()
+      set.timeout(1000)
     }
   }
 </script>
 
 <style scoped>
-
+  body {
+    font-family: Roboto,serif;
+  }
 </style>

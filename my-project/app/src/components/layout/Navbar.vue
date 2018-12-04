@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
     <v-toolbar color="teal darken-4" dark>
+      <v-toolbar-side-icon @click="drawerR"></v-toolbar-side-icon>
       <v-toolbar-title>MedTool</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -16,10 +17,16 @@
 
   export default {
     name: 'Navbar',
+    props: {
+      drawer: Boolean
+    },
     methods: {
       logout () {
         firebase.auth().signOut().then(() =>
           this.$router.replace({name: 'login'}))
+      },
+      drawerR () {
+        this.drawer = !this.drawer
       }
     },
     computed:

@@ -1,11 +1,19 @@
 <template>
   <div id="nav">
     <v-toolbar color="teal darken-4" dark>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>MedTool</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-navigation-drawer
+        :clipped="$vuetify.breakpoint.lgAndUp"
+        v-model="drawer"
+        fixed
+        app
+      >
+      </v-navigation-drawer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat v-on:click="sign"> Sign Up </v-btn>
-        <v-btn flat v-on:click="log"> Log in </v-btn>
+        <v-btn flat v-on:click="sign"> Sign Up</v-btn>
+        <v-btn flat v-on:click="log"> Log in</v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
@@ -16,13 +24,14 @@
     name: 'NavbarStart',
     props: {
       logPanel: Boolean,
-      signPanel: Boolean
+      signPanel: Boolean,
+      drawer: Boolean
     },
     methods: {
-      sign() {
+      sign () {
         this.$emit('sign')
       },
-      log() {
+      log () {
         this.$emit('log')
       }
     }
